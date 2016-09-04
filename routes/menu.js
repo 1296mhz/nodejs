@@ -1,13 +1,14 @@
+/**
+ * Created by cshlovjah on 04.09.16.
+ */
 var express = require('express');
 var router = express.Router();
+var menu = require('../controllers/menu');
 var AuthPass = require('../cshlovjah/libs/authPass');
 var authPass = new AuthPass();
 
 router.get('/', authPass.isLoggedIn);
 
-/* GET home page. */
-router.get('/', function (req, res) {
-    res.render('index', {user: req.user, title: "Панель управления"});
-});
+router.get('/administration', menu.findMenuAdministrationAll);
 
 module.exports = router;

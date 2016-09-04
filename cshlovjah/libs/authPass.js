@@ -16,7 +16,6 @@ AuthPass.prototype.isLoggedIn = function (req, res, next) {
             res.render('login', {user: req.user, title: "Авторизуйтесь"});
         }
     }
-   
 };
 
 module.exports = AuthPass;

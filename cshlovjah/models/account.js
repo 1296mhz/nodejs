@@ -22,7 +22,6 @@ var Account = new Schema({
     updateDate: String
 });
 
-
 Account.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Account', Account);

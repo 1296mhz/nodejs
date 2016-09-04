@@ -12,6 +12,7 @@ var Account = require('./cshlovjah/models/account');
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var menu = require('./routes/menu');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/menu', menu);
 
 //Настройки passport для локальной стратегии
 passport.use(new LocalStrategy(Account.authenticate()));
@@ -78,6 +80,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

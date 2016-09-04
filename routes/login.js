@@ -14,9 +14,7 @@ router.get('/', function (req, res) {
         //res.json(answer)
         log.info("Попытка входа: Авторизуйтесь!");
         res.render('login', {user: req.user, title: "Авторизуйтесь"});
-
-    }
-    else {
+    } else {
         if (req.user.status == 'true') {
             var answer = {
                 user: req.user,
@@ -30,17 +28,15 @@ router.get('/', function (req, res) {
     }
 });
 
-
 router.post('/', passport.authenticate('local'), function (req, res) {
+
     console.log("Пользователь: : " + req.user.username + " вошел.");
-   
+
     if (!req.user) {
         res.render('login', {user: req.user, title: "Авторизуйтесь"});
     } else {
-
         if (req.user.status == 'true') {
             var role;
-
             req.session.save(function (err) {
                 if (err) {
                 }
@@ -49,7 +45,6 @@ router.post('/', passport.authenticate('local'), function (req, res) {
             role = req.user.role;
             res.redirect('/');
         } else {
-          
             console.log("Пользователь: " + req.user.username + " отключен!");
             res.render('login', {user: req.user, title: "Авторизуйтесь"});
         }
