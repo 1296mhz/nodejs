@@ -1,98 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="js/bower_components/bootstrap/dist/css/bootstrap.css">
-    <!--<link rel="stylesheet" href="js/bower_components/fullcalendar/dist/fullcalendar.min.css">-->
-    <!--<link rel="stylesheet" href="js/bower_components/fullcalendar-scheduler/dist/scheduler.min.css">-->
-    <!--<link rel="stylesheet" href="js/libs/bootstrap-modalWindow/bootstrap-modelWindow.css">-->
-    <link rel="stylesheet" href="css/style.css">
+    <title></title>
+
+
+    <link rel="stylesheet" href="js/webix/webix.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="js/webix/scheduler.css" type="text/css" charset="utf-8">
+    <script src="js/webix/webix.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/webix/scheduler.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bower_components/jquery/dist/jquery.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="../" class="navbar-brand">Автосервис</a>
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Администрирование<span
-                                class="caret"></span></a>
-                    <ul id="administrationMenu" class="dropdown-menu" aria-labelledby="themes">
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Заявки<span
-                                class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="themes">
-                        <li><a class="add-event" href="#addEvent">Добавить</a></li>
-                        <li class="divider"></li>
-                        <li><a class="update-event" href="#updateEvent">Редактировать</a></li>
-                        <li><a class="delete-event" href="#deleteEvent">Удалить</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="delete-event" href="#help">Помощь</a>
-                </li>
-                <li>
-                    <a class="logout" href="/logout">Выход</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="navbar-brand">Вы вошли как <%= user.username %></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<script type="text/javascript" charset="utf-8">
 
-<div class="container-fluid main-container">
-    <div id="mainframe">
-        <div id="calendar"></div>
-    </div>
+    var filmset = [];
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/user",
 
-</div>
-<!--Меню администрирования-->
-<script type="text/template" id="menu-administration">
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
 
-    <a class="{{ classItem }}" href="#{{ hrefItem }}">{{ nameItem }}</a>
+             filmset = data;
+           console.log(data)
+        }
+    });
+
+    console.log(filmset)
+
+    webix.ui({
+        view:"webix-scheduler",
+        date:new Date(2010,0,5),
+        mode:"week",
+        init:function(){ }, //конфигурация scheduler
+        ready:function(){
+            scheduler.parse("..events data..")
+        }
+    });
+    /*
+    webix.ui({
+        rows: [
+            { view:"toolbar", id:"mybar", elements:[
+                { view:"button", value:"Add", width:70 },
+                { view:"button", value:"Delete", width:70 },
+                { view:"button", value:"Update", width:70 },
+                { view:"button", value:"Clear Form", width:85}]
+            },
+            { cols:[
+                {view:"form", id:"myform", width:200, elements:[
+                    { view:"text", name:"title", placeholder:"Title", width:180, align:"center"},
+                    { view:"text", name:"year", placeholder:"Year", width:180, align:"center"} ]
+                },
+                {
+                    view:"list",
+                    id:"mylist",
+                    template:"#name# - #group# - #username# - #description# - #boxId#",
+                    select:true, //enables selection
+                    height:400,
+                    data: filmset
+                }
+            ]}
+        ]
+    });
+
+*/
 </script>
-
-<div class="windowModal"></div>
-
-
-<script src="js/bower_components/jquery/dist/jquery.js"></script>
-<!--<script src="js/bower_components/jquery-ui/jquery-ui.min.js"></script>-->
-<script src="js/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="js/bower_components/underscore/underscore-min.js"></script>
-<script src="js/bower_components/backbone/backbone-min.js"></script>
-<!--<script src="js/bower_components/moment/moment.js"></script>-->
-<!--<script src="js/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>-->
-<!--<script src="js/bower_components/fullcalendar-scheduler/dist/scheduler.min.js"></script>-->
-<!--<script src="js/bower_components/backbone-forms/distribution/backbone-forms.js"></script>-->
-<!--<script src="js/bower_components/backbone-forms/distribution/templates/bootstrap3.js"></script>-->
-<!--Подключение модального окна-->
-<!--<script src="js/libs/bootstrap-modalWindow/bootstrap-modalWindow.js"></script>-->
-<!--Подключение меню "Администрирование"-->
-<!--<script src="js/ui/init.js"></script>-->
-<!--<script src="js/ui/menu/administration/model/menu.js"></script>-->
-<!--<script src="js/ui/menu/administration/collections/menu.js"></script>-->
-<!--<script src="js/ui/menu/administration/view/item.js"></script>-->
-<!--<script src="js/ui/menu/administration/view/items.js"></script>-->
-<!--<script src="js/ui/forms/administration/model/user-edit.js"></script>-->
-<!--<script src="js/ui/forms/administration/view/user-edit.js"></script>-->
-<!--<script src="js/ui/menu/administration/index.js"></script>-->
-<!--<script src="js/this/calendar.js"></script>-->
-
 
 </body>
 </html>

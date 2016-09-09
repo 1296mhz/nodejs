@@ -1,6 +1,7 @@
 /**
  * Created by cshlovjah on 04.09.16.
  */
+
 var mongoose = require('../libs/mongoose');
 
 
@@ -13,6 +14,7 @@ var Account = new Schema({
     password: String,
     group: String,
     name: String,
+    boxId: String,
     description: String,
     status: String,
     picture: String,

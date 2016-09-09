@@ -3,7 +3,7 @@ var router = express.Router();
 var AuthPass = require('../cshlovjah/libs/authPass');
 var authPass = new AuthPass();
 
-router.get('/', authPass.isLoggedIn);
+//router.get('/', authPass.isLoggedIn);
 
 /* GET home page. */
 router.get('/', function (req, res) {

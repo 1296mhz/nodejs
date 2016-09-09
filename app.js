@@ -8,11 +8,13 @@ var log = require('./cshlovjah/libs/log')(module);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Account = require('./cshlovjah/models/account');
-
+var db = require('./cshlovjah/libs/mongodriver');
+var config = require('./cshlovjah/libs/config');
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var menu = require('./routes/menu');
+var user = require('./routes/user');
 
 var app = express();
 
@@ -45,6 +47,7 @@ app.use('/', routes);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/menu', menu);
+app.use('/user', user);
 
 //Настройки passport для локальной стратегии
 passport.use(new LocalStrategy(Account.authenticate()));
@@ -79,6 +82,17 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+// Connect to Mongo on start
+db.connect(config.get('mongodbnative:uri'), function(err) {
+  if (err) {
+    console.log('Unable to connect to Mongo.')
+    process.exit(1)
+  } else {
+    console.log('Listening on port 3000...')
+
+  }
 });
 
 module.exports = app;
